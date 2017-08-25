@@ -1,0 +1,10 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+    <div>
+        <h1><i class="fa fa-warning"></i>  "Houston, We Have a Problem...."</h1>
+        <p>This server has thrown an unrecoverable error.  Don't fret though.</p>
+        <p>Our engineers have already been alerted and are working on it.</p>
+        <p><a href="{{ url_for('index') }}" class="btn btn-sm btn-link">Navigate away from this page.</a></p>
+    </div>
+{% endblock %}

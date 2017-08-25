@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Mnemonic.io - Random Password Generator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/united.min.css') }}" media="screen">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.min.css') }}" media="screen">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" media="screen">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16x16.png') }}">
+    </head>
+    <body>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="/" class="navbar-brand"><i class="fa fa-user-secret"></i> MPG</a>
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar-main">
+                    <ul class="nav navbar-nav">
+                        <li {% if 'entropy' in request.path %}class="active"{% endif %}><a href="{{ url_for('entropy') }}"><i class="fa fa-snowflake-o"></i> Entropy</a></li>
+                        <li {% if 'mnemonics' in request.path %}class="active"{% endif %}><a href="{{ url_for('mnemonics') }}"><i class="fa fa-microchip"></i> Mnemonics</a></li>
+                        <li {% if 'nist-passwords' in request.path %}class="active"{% endif %}><a href="{{ url_for('nistpasswords') }}"><i class="fa fa-bank"></i> NIST</a></li>
+                        <li {% if 'xkcd-936' in request.path %}class="active"{% endif %}><a href="{{ url_for('xkcd936') }}"><i class="fa fa-male"></i> XKCD</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <form class="navbar-form navbar-right" method="post" action="{{ url_for('index') }}">
+                            <div class="input-group">
+                                <input type="text" name="num_words" placeholder="Number of Words (1-12)"
+                                       class="form-control"
+                                       {% if request.form %}
+                                        value="{{ request.form['num_words'] }}"
+                                       {% else %}
+                                        value="5"
+                                       {% endif %}
+                                />
+                                <div class="input-group-btn">
+                                    <button class="btn btn-info" type="submit">
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="page-header" id="banner">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="alert alert-block alert-dismissible alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <h4><i class="fa fa-warning"></i> WARNING.  INVALID DATA!</h4>
+                                {% for message in messages %}
+                                    <p>{{ message }}</p>
+                                {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-8 col-sm-4">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="navbar-fixed-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="list-unstyled">
+                            <li>&copy; 2017 Mnemonic Password Generator.
+                                <a href="http://www.python-development-systems.com"
+                                   target="_blank">Python Development Systems, LLC.
+                                </a>
+                            </li>
+                            <li class="pull-right">
+                                <a href="mailto:support@mnemonic-password-generator.com">
+                                    <i class="fa fa-check-circle"></i> Support
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script>
+            function copyToClipboard(element) {
+              var $temp = $("<input>");
+              $("body").append($temp);
+              $temp.val($(element).text()).select();
+              document.execCommand("copy");
+              $temp.remove();}
+        </script>
+    </body>
+</html>

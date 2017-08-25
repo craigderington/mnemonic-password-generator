@@ -1,0 +1,13 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+    <div class="well well-lg" style="font-size:40px;text-align: center;">
+        <p id="mpg1">{% for pass in pass_list %}{{  pass }}{% if not loop.last %}-{% endif %}{% endfor %}</p>
+    </div>
+    <div>
+        <a href="#" onclick="copyToClipboard('#mpg1')" class="btn btn-xs btn-link pull-right">
+            <i class="fa fa-clipboard"></i> Copy to Clipboard
+        </a>
+        <span class="pull-left"><small>Server Time: {{  today  }}</small></span>
+    </div>
+{% endblock %}
